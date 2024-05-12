@@ -1,8 +1,28 @@
 <x-layout>
-    <x-slot name="title">Welcome</x-slot>
+<div class="space-y-10">
+    <section>
+        <x-section-heading>
+            <h2>Featured Jobs</h2>
+        </x-section-heading>
+        <div class="grid lg:grid-cols-3 gap-8 mt-6">
+            <x-job-card />
+            <x-job-card />
+            <x-job-card />
 
-    <x-slot name="content">
-        <h1>Welcome</h1>
-        <p>This is the welcome page.</p>
-    </x-slot>
+        </div>
+    </section>
+    <section>
+
+        <x-section-heading>
+            <h2>Tags</h2>
+        </x-section-heading>
+    </section>
+    <section>
+
+        <x-section-heading>
+            <h2>Recent Jobs</h2>
+        </x-section-heading>
+    </section>
+</div>
+
 </x-layout>

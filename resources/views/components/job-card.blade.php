@@ -12,9 +12,6 @@
     <div class="flex justify-between items-center mt-auto">
         <div>
            <x-tag>PHP</x-tag>
-
-
-
         </div>
 
     <img src="http://placehold.it/42/42" alt="" class="rounded-xl">

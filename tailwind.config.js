@@ -9,7 +9,10 @@ export default {
     extend: {
         colors: {
             "black": "#060606"
-        }
+        },
+        fontSize: {
+            "xxs": ".625rem" // 10px
+        },
     },
   },
   plugins: [],

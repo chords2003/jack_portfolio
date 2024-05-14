@@ -1,11 +1,10 @@
-<div class="p-4 bg-white/5 rounded-xl flex flex-col text-center"> <!-- When written with just "flex", this indicate a flex of Row -->
-
+<x-panel>
     <div class="self-start text-sm">Laracast</div>
-    <div class="py-8 font-bold">
-        <h3>
+    <div class="py-8 ">
+        <h3 class="group-hover:text-blue-800 text-xl font-bold transition-colors duration-300"> <!-- This is how we apply a hover effect -->
             Senior Developer
         </h3>
-        <p>
+        <p class="text-sm mt-4">
             Full Time - From $60,000 - $80,000
         </p>
     </div>
@@ -18,4 +17,5 @@
 
     <x-employer-logo :width="42" /> <!-- This is how we pass props to a component -->
 </div>
-</div>
+</x-panel>
+

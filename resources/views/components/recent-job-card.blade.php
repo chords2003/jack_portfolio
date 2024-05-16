@@ -1,5 +1,6 @@
-<div class="p-4 bg-white/5 rounded-xl flex gap-6 border border-transparent hover:border-blue-800 group transition-colors duration-300  "> <!-- When written with just "flex", this indicate a flex of Row -->
+@props(['job'])
 
+<x-panel class="flex gap-x-6">
 <div>
     <x-employer-logo />
 </div>
@@ -20,4 +21,4 @@
            <x-tag>JAVA</x-tag>
         </div>
     </div>
-</div>
+</x-panel>

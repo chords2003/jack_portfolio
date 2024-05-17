@@ -2,16 +2,31 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Tag;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Job extends Model
 {
     use HasFactory;
 
+
     public function employee():BelongsTo
     {
         return $this->belongsTo(Employee::class);
+    }
+
+    public function tag(string $name)
+    {
+        $tag = Tag::firstOrCreate(['name' => $name]);
+
+        $this->tags()->attach($tag);
+    }
+
+    public function tags()
+    {
+        // return $this->tag->pluck('name');
+        return $this->belongsToMany(Tag::class);
     }
 }

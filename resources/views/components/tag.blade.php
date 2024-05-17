@@ -12,4 +12,4 @@
     }
 @endphp
 
-<a href="" class="{{ $classes }}">{{ $slot }}</a>
+<a href="/tags/{{ strtolower($tag->name) }}" class="{{ $classes }}">{{ ucwords($tag->name )}}</a>

@@ -4,7 +4,7 @@
     <section class="text-center pt-6">
         <h1 class="font-bold text-4xl">Find your next job</h1>
         <form class="pt-6" action="">
-            <input class="bg-gray-600 w-full max-w-xl rounded-xl px-5 py-4" placeholder="Web Developer.."  type="text">
+            <input  placeholder="Web Developer.."  type="text" class="bg-white/5 border border-white/10 w-full max-w-xl rounded-xl px-5 py-4">
         </form>
     </section>
 

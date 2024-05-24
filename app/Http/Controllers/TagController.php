@@ -11,10 +11,13 @@ class TagController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function __invoke(Tag $tag)
     {
-        //
+        $jobs = $tag->jobs;
+
+        return view('jobs.results', ['jobs' => $jobs]);
     }
+
 
     /**
      * Show the form for creating a new resource.

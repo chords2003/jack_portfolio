@@ -19,8 +19,8 @@ class JobController extends Controller
         $jobs = Job::latest()->with(['employee', 'tags'])->get()->groupBy('featured');
 
         return view('jobs.index', [
-            'jobs' => $jobs[0],
-            'featuredJobs' => $jobs[1],
+            'jobs' => $jobs[1],
+            'featuredJobs' => $jobs[0],
             'tags' => Tag::all(),
         ]);
     }
@@ -35,10 +35,11 @@ class JobController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     * Validate the request attributes and create a new job with the validated attributes.
      */
     public function store(Request $request)
     {
-        $attributes = $request->validate([
+        $attributes = $request->validate([ //validate the request attributes with the following rules...
             'title' => ['required'],
             'salary' => ['required'],
             'location' => ['required'],
@@ -47,12 +48,12 @@ class JobController extends Controller
             'tags' => ['nullable'],
         ]);
 
-        $attributes['featured'] = $request->has('featured');
+        $attributes['featured'] = $request->has('featured'); //if the request has a featured key, set the featured attribute to true
 
-        $job = Auth::user()->employer->jobs()->create(Arr::except($attributes, 'tags'));
+        $job = Auth::user()->employee->jobs()->create(Arr::except($attributes, 'tags')); //create a job with all attributes except tags
 
-        if ($attributes['tags'] ?? false) {
-            foreach (explode(',', $attributes['tags']) as $tag) {
+        if ($attributes['tags'] ?? false) { //if the tags attribute exists, then do the following...
+            foreach (explode(',', $attributes['tags']) as $tag) { //for each tag in the tags attribute, explode the tags attribute into an array of tags separated by commas and do the following...
                 $job->tag($tag);
             }
         }

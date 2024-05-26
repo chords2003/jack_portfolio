@@ -5,9 +5,8 @@
         <x-input label="Salary" name="salary" placeholder="Salary" />
         <x-input label="Location" name="location" placeholder="Location" />
         <x-select label="Schedule" name="schedule">
-            <option value="Full-time">Full-time</option>
-            <option value="Part-time">Part-time</option>
-            <option value="Contract">Contract</option>
+            <option>Full Time</option>
+            <option>Part Time</option>
         </x-select>
         <x-input label="URL" name="url" placeholder="https://acme.com/jobs/ceo-wanted" />
         <x-checkbox label="Feature (Cost Extra)" name="feature" />

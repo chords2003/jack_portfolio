@@ -12,9 +12,9 @@ class Job extends Model
     use HasFactory;
 
 
-    public function employee():BelongsTo
+    public function employer():BelongsTo
     {
-        return $this->belongsTo(Employee::class);
+        return $this->belongsTo(Employer::class);
     }
 
     public function tag(string $name)

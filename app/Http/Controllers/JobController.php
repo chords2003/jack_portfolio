@@ -66,4 +66,50 @@ class JobController extends Controller
 
         return redirect('/');
     }
+
+    public function edit(Job $job)
+    {
+        return view('jobs.edit', compact('job'));
+    }
+
+    public function update(Request $request, Job $job)
+{
+    $request->validate([
+        'title' => 'required',
+        'salary' => 'required',
+        'location' => 'required',
+        'schedule' => ['required', Rule::in(['Part Time', 'Full Time'])],
+        'url' => ['required', 'active_url'],
+        'tags' => 'nullable',
+    ]);
+
+    // Update the job with the validated data except for tags
+    $job->update($request->only(['title', 'salary', 'location', 'schedule', 'url']));
+
+    // Update the tags if provided
+    if ($request->has('tags')) {
+        // Get the tag names from the request
+        $tagNames = explode(',', $request->input('tags'));
+
+        // Retrieve or create the tags and get their IDs
+        $tagIds = [];
+        foreach ($tagNames as $tagName) {
+            $tag = Tag::firstOrCreate(['name' => trim($tagName)]);
+            $tagIds[] = $tag->id;
+        }
+
+        // Sync the job's tags with these IDs
+        $job->tags()->sync($tagIds);
+    }
+
+    return redirect('/')->with('success', 'Job updated successfully');
+}
+
+
+
+    public function destroy(Job $job)
+    {
+        $job->delete();
+        return redirect('/')->with('success', 'Job deleted successfully');
+    }
 }

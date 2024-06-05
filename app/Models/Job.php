@@ -10,6 +10,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Job extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'hidden',
+    ];
 
 
     public function employer():BelongsTo
@@ -23,6 +26,8 @@ class Job extends Model
 
         $this->tags()->attach($tag);
     }
+
+
 
     public function tags()
     {

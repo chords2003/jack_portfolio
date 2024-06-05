@@ -24,6 +24,8 @@
 
                 <div class="mt-6">
                     <x-button>Update Job</x-button>
+                    <x-cancel-button href="{{ route('jobs.show', $job) }}">Cancel</x-cancel-button>
+
                 </div>
             </form>
 

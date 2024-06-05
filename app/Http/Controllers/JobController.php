@@ -105,6 +105,15 @@ class JobController extends Controller
     return redirect('/')->with('success', 'Job updated successfully');
 }
 
+    public function hide(Job $job)
+    {
+        // Toggle the hidden state
+        $job->hidden = !$job->hidden;
+        $job->save();
+
+        // Return a JSON response indicating success
+        return response()->json(['success' => true]);
+    }
 
 
     public function destroy(Job $job)

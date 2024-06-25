@@ -19,6 +19,9 @@ Route::get('/jobs/{job}/edit', [JobController::class, 'edit'])->name('jobs.edit'
 Route::patch('/jobs/{job}', [JobController::class, 'update'])->name('jobs.update')->middleware('auth');
 Route::delete('/jobs/{job}', [JobController::class, 'destroy'])->name('jobs.destroy')->middleware('auth');
 Route::put('/jobs/{job}/hide', [JobController::class, 'hide'])->name('jobs.hide');
+// Route::put('/jobs/{job}/hide', [JobController::class, 'toggleVisibility'])->name('jobs.toggle-visibility');
+
+
 route::middleware('guest') ->group(function() {
     Route::get('/login', [SessionController::class, 'create']);
     Route::post('/login', [SessionController::class, 'store']);

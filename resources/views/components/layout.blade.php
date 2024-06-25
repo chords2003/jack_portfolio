@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Portfolio</title>
     @vite(['resources/css/app.css','resources/js/app.js'])
-    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.2/dist/alpine.min.js" defer></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.0/dist/cdn.min.js"></script>
 </head>
 
 <body class="bg-black text-white font-serif pb-10">
@@ -63,6 +63,7 @@
 </body>
 
 </html>
+
 
 <script>
     const userMenuButton = document.getElementById('user-menu-button');

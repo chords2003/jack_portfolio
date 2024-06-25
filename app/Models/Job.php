@@ -14,6 +14,10 @@ class Job extends Model
         'hidden',
     ];
 
+    protected $casts = [
+        'hidden' => 'boolean',
+    ];
+
 
     public function employer():BelongsTo
     {

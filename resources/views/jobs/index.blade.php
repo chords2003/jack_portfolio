@@ -13,7 +13,7 @@
 
             <div class="grid lg:grid-cols-3 gap-8 mt-6">
                 @foreach($featuredJobs as $job)
-                    <x-job-card :$job />
+                    <x-job-cards :job="$job" />
                 @endforeach
             </div>
         </section>
@@ -23,7 +23,7 @@
 
             <div class="mt-6 space-x-3">
                 @foreach($tags as $tag)
-                    <x-tag :$tag />
+                    <x-tag :tag="$tag" />
                 @endforeach
             </div>
         </section>
@@ -33,9 +33,33 @@
 
             <div class="mt-6 space-y-6">
                 @foreach($jobs as $job)
-                    <x-recent-job-card :$job />
+                    <x-recent-job-card :job="$job" />
                 @endforeach
             </div>
         </section>
+
+
+        <section>
+            <x-section-heading>Archived Jobs <h2>({{ $hiddenJobs->count() }})</h2></x-section-heading>
+
+            <div class="mt-6 space-y-6">
+                @foreach($hiddenJobs as $hiddenjob)
+                    <x-hidden-jobs :job="$hiddenjob" />
+                @endforeach
+            </div>
+        </section>
+
+        {{-- <section>
+            <div class="my-8">
+                <h2 class="text-2xl font-bold">Archived Jobs ({{ $hiddenJobs->count() }})</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    @forelse($hiddenJobs as $hiddenJob)
+                        <x-hidden-jobs :job="$hiddenJob" />
+                    @empty
+                        <p>No archived jobs found.</p>
+                    @endforelse
+                </div>
+            </div>
+        </section> --}}
     </div>
 </x-layout>

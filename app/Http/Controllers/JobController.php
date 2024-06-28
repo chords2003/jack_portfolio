@@ -31,18 +31,33 @@ class JobController extends Controller
     //     ]);
     // }
 
+    // public function index()
+    // {
+    //     $featuredJobs = Job::where('featured', true)->where('hidden', false)->with(['employer', 'tags'])->get();
+    //     $hiddenJobs = Job::where('hidden', true)->with(['employer', 'tags'])->get();
+    //     $jobs = Job::where('featured', false)->where('hidden', false)->with(['employer', 'tags'])->get();
+
+    //     $tags = Tag::all();
+
+    //     return view('jobs.index', [
+    //         'jobs' => $jobs,
+    //         'hiddenJobs' => $hiddenJobs,
+    //         'featuredJobs' => $featuredJobs,
+    //         'tags' => $tags,
+    //     ]);
+    // }
+
     public function index()
     {
         $featuredJobs = Job::where('featured', true)->where('hidden', false)->with(['employer', 'tags'])->get();
+        $recentJobs = Job::where('featured', false)->where('hidden', false)->with(['employer', 'tags'])->get();
         $hiddenJobs = Job::where('hidden', true)->with(['employer', 'tags'])->get();
-        $jobs = Job::where('featured', false)->where('hidden', false)->with(['employer', 'tags'])->get();
-
         $tags = Tag::all();
 
         return view('jobs.index', [
-            'jobs' => $jobs,
-            'hiddenJobs' => $hiddenJobs,
             'featuredJobs' => $featuredJobs,
+            'recentJobs' => $recentJobs,
+            'hiddenJobs' => $hiddenJobs,
             'tags' => $tags,
         ]);
     }
@@ -57,7 +72,21 @@ class JobController extends Controller
     //     return response()->json(['success' => true]);
     // }
 
+//Visibility method
+public function toggleVisibility(Request $request, Job $job)
+{
+    $hidden = $request->input('hidden');
+    $featured = $request->input('featured', $job->featured);
 
+    $job->hidden = $hidden;
+    $job->featured = $featured;
+    $job->save();
+
+    return response()->json([
+        'success' => true,
+        'job' => $job->fresh()->load('employer', 'tags')
+    ]);
+}
 
 
     /**
@@ -101,38 +130,39 @@ class JobController extends Controller
         return view('jobs.edit', compact('job'));
     }
 
+
     public function update(Request $request, Job $job)
-{
-    $request->validate([
-        'title' => 'required',
-        'salary' => 'required',
-        'location' => 'required',
-        'schedule' => ['required', Rule::in(['Part Time', 'Full Time'])],
-        'url' => ['required', 'active_url'],
-        'tags' => 'nullable',
-    ]);
+    {
+        $request->validate([
+            'title' => 'required',
+            'salary' => 'required',
+            'location' => 'required',
+            'schedule' => ['required', Rule::in(['Part Time', 'Full Time'])],
+            'url' => ['required', 'active_url'],
+            'tags' => 'nullable',
+        ]);
 
-    // Update the job with the validated data except for tags
-    $job->update($request->only(['title', 'salary', 'location', 'schedule', 'url']));
+        // Update the job with the validated data except for tags
+        $job->update($request->only(['title', 'salary', 'location', 'schedule', 'url']));
 
-    // Update the tags if provided
-    if ($request->has('tags')) {
-        // Get the tag names from the request
-        $tagNames = explode(',', $request->input('tags'));
+        // Update the tags if provided
+        if ($request->has('tags')) {
+            // Get the tag names from the request
+            $tagNames = explode(',', $request->input('tags'));
 
-        // Retrieve or create the tags and get their IDs
-        $tagIds = [];
-        foreach ($tagNames as $tagName) {
-            $tag = Tag::firstOrCreate(['name' => trim($tagName)]);
-            $tagIds[] = $tag->id;
+            // Retrieve or create the tags and get their IDs
+            $tagIds = [];
+            foreach ($tagNames as $tagName) {
+                $tag = Tag::firstOrCreate(['name' => trim($tagName)]);
+                $tagIds[] = $tag->id;
+            }
+
+            // Sync the job's tags with these IDs
+            $job->tags()->sync($tagIds);
         }
 
-        // Sync the job's tags with these IDs
-        $job->tags()->sync($tagIds);
+        return redirect('/')->with('success', 'Job updated successfully');
     }
-
-    return redirect('/')->with('success', 'Job updated successfully');
-}
 
 // public function hide(Job $job)
 // {
@@ -153,6 +183,7 @@ public function hide(Request $request, Job $job)
 
     return response()->json(['success' => true]);
 }
+
 
 
     public function destroy(Job $job)

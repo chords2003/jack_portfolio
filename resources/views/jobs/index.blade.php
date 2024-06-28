@@ -10,8 +10,7 @@
 
         <section class="pt-10">
             <x-section-heading>Featured Jobs</x-section-heading>
-
-            <div class="grid lg:grid-cols-3 gap-8 mt-6">
+            <div class= "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-6 rounded bg-black" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
                 @foreach($featuredJobs as $job)
                     <x-job-cards :job="$job" />
                 @endforeach
@@ -28,38 +27,32 @@
             </div>
         </section>
 
-        <section>
+        <section class=" bg-black">
             <x-section-heading>Recent Jobs</x-section-heading>
 
-            <div class="mt-6 space-y-6">
-                @foreach($jobs as $job)
+            <div class="mt-6 space-y-6   rounded">
+                @forelse($recentJobs as $job)
                     <x-recent-job-card :job="$job" />
-                @endforeach
+                @empty
+                    <p class="text-white bg-black">
+                        There are no recent jobs at the moment!.
+                </p>
+                @endforelse
             </div>
         </section>
 
+        <section class=" rounded">
+            <x-section-heading>Archived Jobs ({{ $hiddenJobs->count() }})</x-section-heading>
 
-        <section>
-            <x-section-heading>Archived Jobs <h2>({{ $hiddenJobs->count() }})</h2></x-section-heading>
-
-            <div class="mt-6 space-y-6">
-                @foreach($hiddenJobs as $hiddenjob)
-                    <x-hidden-jobs :job="$hiddenjob" />
-                @endforeach
+            <div class="mt-6 space-y-6 rounded ">
+                @forelse($hiddenJobs as $job)
+                    <x-hidden-jobs :job="$job" />
+                @empty
+                    <p>
+                        There are no archived jobs at the moment!.
+                    </p>
+                @endforelse
             </div>
         </section>
-
-        {{-- <section>
-            <div class="my-8">
-                <h2 class="text-2xl font-bold">Archived Jobs ({{ $hiddenJobs->count() }})</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    @forelse($hiddenJobs as $hiddenJob)
-                        <x-hidden-jobs :job="$hiddenJob" />
-                    @empty
-                        <p>No archived jobs found.</p>
-                    @endforelse
-                </div>
-            </div>
-        </section> --}}
     </div>
 </x-layout>
